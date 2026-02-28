@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>รายงานปัญหา</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div class="container">
+        <h1 id="title" style="text-align: center;">รายงานปัญหาโรงเรียนเทศบาล ๔ เชาวนปรีชาอุทิศ</h1>
+    </div>
+
+    <h4>รายงานปัญหาต่างๆ ในโรงเรียน</h4>
+    <div class="container"></div>
+
+    <hr>
+
+    <h4>รายงานตรงนี้!</h4>
+    <form id="reportForm">
+        <h5><label for="name">ชื่อ-นามสกุล</label></h5>
+        <input id="name" type="text" name="ชื่อ-นามสกุล" placeholder="ชื่อ-นามสกุล">
+        
+        <h5><label for="message">รายละเอียดปัญหา</label></h5>
+        <input id="message" type="text" name="ใส่ข้อความ" placeholder="ใส่ข้อความ"><br><br>
+
+        <input type="button" value="ส่ง" onclick="displayComment()">
+    </form>
+
+    <hr>
+
+    <div id="display-area" style="margin-top: 20px; padding: 10px; border-radius: 5px;">
+        <h3>รายการที่รายงานเข้ามา:</h3>
+        <div id="comments-list">
+            </div>
+    </div>
+
+    <script>
+        function displayComment() {
+            // 1. ดึงค่าจากช่อง Input
+            const nameInput = document.getElementById('name');
+            const messageInput = document.getElementById('message');
+            const commentsList = document.getElementById('comments-list');
+
+            // 2. ตรวจสอบว่ากรอกข้อมูลหรือยัง
+            if (nameInput.value.trim() === "" || messageInput.value.trim() === "") {
+                alert("กรุณากรอกข้อมูลให้ครบถ้วนก่อนส่งครับ");
+                return;
+            }
+
+            // 3. สร้าง Element สำหรับแสดงผล
+            const newComment = document.createElement('div');
+            newComment.style.backgroundColor = '#f4f4f4';
+            newComment.style.padding = '10px';
+            newComment.style.marginBottom = '10px';
+            newComment.style.borderLeft = '5px solid #007bff';
+            
+            // ใส่เนื้อหา
+            newComment.innerHTML = `
+                <strong>ผู้แจ้ง:</strong> ${nameInput.value} <br>
+                <strong>ปัญหา:</strong> ${messageInput.value} <br>
+                <small style="color: gray;">ส่งเมื่อ: ${new Date().toLocaleString('th-TH')}</small>
+            `;
+
+            // 4. เอาไปวางในรายการ (ใหม่สุดอยู่บน)
+            commentsList.prepend(newComment);
+
+            // 5. ล้างช่องกรอกข้อมูลให้ว่าง
+            nameInput.value = "";
+            messageInput.value = "";
+        }
+    </script>
+</body>
+</html>
